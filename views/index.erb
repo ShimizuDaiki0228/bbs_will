@@ -4,38 +4,68 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel = "stylesheet" href = "./css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
   </head>
   <body>
-    <form action="/new" method="post" enctype="multipart/form-data">
-      <p>名前：<input type="text" name="user_name"></p>
-      <p>本文：<input type="text" name="body"></p>
-      <p><input type="file" name="file"></p>
-      <input type="submit" value="POST">
-    </form>
-    <ul>
-      <% @contents.each do |content| %>
-        <li>
-          <p><%= content.name %></p>
-          <p><%= content.body %></p>
-          <% unless content.img.empty? %>
-            <p><img src="<%= content.img %>"></p>
+    <div class="wrapper">
+      <div class="header">
+        <div class = "pic">
+          <img src = "../images/dylan-sauerwein-Wf7z8suq9mA-unsplash.jpeg" class = "img">
+        </div>  
+         
+        <div class = "test">
+          <form action= "/new" method="post" enctype="multipart/form-data" class = "f_form">
+            <h1><p class = "title">My PHOTO ALBUM</p></h1>
+            <p class = "form">Name<input type="text" style = "border:none" name="user_name" class = "form_text" autocomplete="off"></p>
+            <p class = "form">Caption<input type="text" style = "border:none" name="body" class = "form_text" autocomplete="off"></p>
+            
+            <label class = "filename">
+              <p class = "Image">SelectImage</p>
+              <input type="file" name = "file" class="select_file">
+            </label>
+            
+            <input type="submit" value="POST" style = "border:none" class = "post">
+          </form>
+        </div>
+        
+      </div>
+      <div class = container>
+        <ul>
+          <% @contents.each do |content| %>
+            <li>
+              <div class = "result">
+                <p class = "form_end" id = "name"><%= content.name %></p>
+                <p class = "form_end"><%= content.body %></p>
+                <% unless content.img.empty? %>
+                  <p class = "selected_picture"><img src="<%= content.img %>" class = "img_end"></p>
+                <% end %>
+                <div class = "flex_container">
+                  <div class = "figure">
+                    <span class = "clear-decoration"><%= content.good %></span>
+                  </div>
+                  <span>
+                    <form action="/good/<%= content.id %>" method="post">
+                      <input type="submit" value="LIKE" class="clear-decoration">
+                    </form>
+                  </span>
+                  <span>
+                    <form action="/delete/<%= content.id %>" method="post">
+                      <input type="submit" value="DELETE" class="clear-decoration">
+                    </form>
+                  </span>
+                  <span>
+                    <a href="/edit/<%= content.id %>" >EDIT</a>
+                  </span>
+                </div>
+              </div>
+            </li>
           <% end %>
-          <span><%= content.good %></span>
-          <span>
-            <form action="/good/<%= content.id %>" method="post">
-              <input type="submit" value="LIKE">
-            </form>
-          </span>
-          <span>
-            <form action="/delete/<%= content.id %>" method="post">
-              <input type="submit" value="DELETE">
-            </form>
-          </span>
-          <span>
-            <a href="/edit/<%= content.id %>">EDIT</a>
-          </span>
-        </li>
-      <% end %>
-    </ul>
+        </ul>
+      </div>
+    </div>
   </body>
 </html>
